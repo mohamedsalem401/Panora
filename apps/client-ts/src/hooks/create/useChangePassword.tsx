@@ -1,41 +1,35 @@
 import config from '@/lib/config';
 import { useMutation } from '@tanstack/react-query';
 
-type IUserDto = {
+interface IChangePasswordInputDto {
     id_user: string;
     email: string;
-    first_name: string;
-    last_name: string;
-    id_organization?: string;
+    old_password_hash: string;
+    new_password_hash: string;
 }
 
-interface ILoginInputDto {
-    email: string,
-    password_hash: string
-}
-
-const useCreateLogin = () => {
-    const add = async (userData: ILoginInputDto) => {
+const useChangePassword = () => {
+    const changePassword = async (newPasswordData: IChangePasswordInputDto) => {
         // Fetch the token
-        const response = await fetch(`${config.API_URL}/auth/login`, {
+        const response = await fetch(`${config.API_URL}/auth/change-password`, {
             method: 'POST',
-            body: JSON.stringify(userData),
+            body: JSON.stringify(newPasswordData),
             headers: {
                 'Content-Type': 'application/json',
             },
         });
 
         if (!response.ok) {
-            throw new Error("Login Failed!!")
+            throw new Error("Changing Password Failed!!")
         }
 
         return response.json();
     };
 
-    const loginPromise = (data: ILoginInputDto) => {
+    const changePasswordPromise = (data: IChangePasswordInputDto) => {
         return new Promise(async (resolve, reject) => {
             try {
-                const result = await add(data);
+                const result = await changePassword(data);
                 resolve(result);
 
             } catch (error) {
@@ -46,10 +40,10 @@ const useCreateLogin = () => {
 
     return {
         mutationFn: useMutation({
-            mutationFn: add,
+            mutationFn: changePassword,
         }),
-        loginPromise
+        changePasswordPromise
     }
 };
 
-export default useCreateLogin;
+export default useChangePassword;

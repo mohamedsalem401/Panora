@@ -393,9 +393,9 @@ export const CONNECTORS_METADATA: ProvidersConfig = {
         authStrategy: AuthStrategy.oauth2
       },
       'github': {
-        scopes: '',
+        scopes: 'repo read:org user read:user write:repo_hook admin:repo_hook',
         urls: {
-          docsUrl: 'https://docs.github.com/fr/rest',
+          docsUrl: 'https://docs.github.com/en/rest',
           apiUrl: 'https://api.github.com',
           authBaseUrl: 'https://github.com/login/oauth/authorize',
         },

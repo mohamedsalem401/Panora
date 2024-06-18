@@ -9,6 +9,7 @@ interface IUserDto {
     password_hash: string,
     id_organisation?: string,
 }
+
 const useCreateUser = () => {
     const add = async (userData: IUserDto) => {
         // Fetch the token
@@ -27,6 +28,7 @@ const useCreateUser = () => {
 
         return response.json();
     };
+
     const createUserPromise = (data: IUserDto) => {
         return new Promise(async (resolve, reject) => {
             try {

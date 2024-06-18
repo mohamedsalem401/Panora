@@ -16,6 +16,7 @@ import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ApiKeyDto } from './dto/api-key.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshDto } from './dto/refresh.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -41,6 +42,14 @@ export class AuthController {
   @Post('login')
   async login(@Body() user: LoginDto) {
     return this.authService.login(user);
+  }
+
+  @ApiOperation({ operationId: 'changePassword', summary: 'Change password' })
+  @ApiBody({ type: ChangePasswordDto })
+  @ApiResponse({ status: 201 })
+  @Post('change-password')
+  async changePassword(@Body() newPasswordRequest: ChangePasswordDto) {
+    return this.authService.changePassword(newPasswordRequest);
   }
 
   // todo: admin only

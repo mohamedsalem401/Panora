@@ -24,17 +24,15 @@ export class SyncController {
     return this.syncService.getSyncStatus(vertical);
   }
 
-  //this route must be protected for premium users (regular sync is one every 24 hours)
+  // this route must be protected for premium users (regular sync is one every 24 hours)
   @ApiOperation({
     operationId: 'resync',
     summary: 'Resync common objects across a vertical',
   })
   @ApiResponse({ status: 200 })
   @UseGuards(ApiKeyAuthGuard)
-  @Get('resyncs/:vertical')
-  resync(@Param('vertical') vertical: string) {
-    // TODO: get the right user_id of the premium user using the api key
-    const user_id = '';
+  @Get('resyncs/:user_id/:vertical')
+  resync(@Param('user_id') user_id: string, @Param('vertical') vertical: string) {
     return this.syncService.resync(vertical, user_id);
   }
 }

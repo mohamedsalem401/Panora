@@ -12,37 +12,37 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
 
-  const [userInitialized,setUserInitialized] = useState(false)
+  const [userInitialized, setUserInitialized] = useState(false)
   const router = useRouter()
   const { mutate } = useUser()
 
   useEffect(() => {
-    if(!Cookies.get('access_token')) {
+    if (!Cookies.get('access_token')) {
       router.replace("/b2c/login")
-    }else {
+    } else {
       mutate(
         Cookies.get('access_token'),
         {
-        onError: () => router.replace("/b2c/login"),
-        onSuccess: () => setUserInitialized(true)
+          onError: () => router.replace("/b2c/login"),
+          onSuccess: () => setUserInitialized(true)
         }
       )
     }
-  },[])
-  
+  }, [])
+
   return (
     <>   {userInitialized ? (
       <>
         <RootLayout>
           {children}
-        </RootLayout> 
+        </RootLayout>
       </>
     ) : (
       <>
-        
+
       </>
     )}
-          
+
     </>
   );
 }

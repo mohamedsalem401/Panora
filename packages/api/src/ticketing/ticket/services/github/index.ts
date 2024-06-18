@@ -66,6 +66,7 @@ export class GithubService implements ITicketService {
       );
     }
   }
+  
   async syncTickets(
     linkedUserId: string,
     remote_ticket_id?: string,

@@ -108,6 +108,31 @@
         ]
       }
     },
+    "/auth/change-password": {
+      "post": {
+        "operationId": "changePassword",
+        "summary": "Change password",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "auth"
+        ]
+      }
+    },
     "/auth/users": {
       "get": {
         "operationId": "getUsers",
@@ -4995,11 +5020,19 @@
         ]
       }
     },
-    "/syncs/resyncs/{vertical}": {
+    "/syncs/resyncs/{user_id}/{vertical}": {
       "get": {
         "operationId": "resync",
         "summary": "Resync common objects across a vertical",
         "parameters": [
+          {
+            "name": "user_id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
           {
             "name": "vertical",
             "required": true,
@@ -5459,7 +5492,8 @@
             "type": "string"
           },
           "password_hash": {
-            "type": "string"
+            "type": "string",
+            "minLength": 9
           },
           "id_organisation": {
             "type": "string"
@@ -5488,6 +5522,26 @@
         "required": [
           "email",
           "password_hash"
+        ]
+      },
+      "ChangePasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "old_password_hash": {
+            "type": "string"
+          },
+          "new_password_hash": {
+            "type": "string",
+            "minLength": 9
+          }
+        },
+        "required": [
+          "email",
+          "old_password_hash",
+          "new_password_hash"
         ]
       },
       "VerifyUserDto": {
